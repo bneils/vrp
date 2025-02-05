@@ -1,4 +1,7 @@
-*.txt
+coords.txt
+names.txt
+distance_matrix.txt
+
 *.osm.pbf
 *.osrm.*
 venv/

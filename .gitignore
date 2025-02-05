@@ -1,0 +1,6 @@
+*.txt
+*.osm.pbf
+*.osrm.*
+venv/
+.vscode/
+*/__pycache__

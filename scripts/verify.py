@@ -1,5 +1,8 @@
 import sys
-import helper
+import os
+
+sys.path.append(os.getcwd() + '/..')
+import vrp.src.helper as helper
 
 # For testing purposes, verifies the outputted file has the correct distance.
 

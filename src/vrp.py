@@ -24,18 +24,31 @@ if __name__ == '__main__':
         with open(names_path) as f:
             name_lines = f.read().split('\n')
 
-    sol1 = sweep(coords, distances, max_miles, max_stops)
-    sol2 = clarke_wright(coords, distances, max_miles, max_stops)
-    sol3 = pyvrp(coords, distances, max_miles, max_stops)
+    solutions = []
 
-    min_cost, optimal_path = min((sol1, sol2, sol3), key=lambda s: s[0])
+    for max_stops_new in range(max_stops, 0, -1):
+        sys.stderr.write(f"Best solution for max_stops = {max_stops_new}\n")
+
+        sol1 = sweep(coords, distances, max_miles, max_stops_new) + ("Sweep", max_stops_new)
+        sol2 = clarke_wright(coords, distances, max_miles, max_stops_new) + ("Clarke-Wright", max_stops_new)
+        sol3 = pyvrp(coords, distances, max_miles, max_stops_new) + ("PyVRP", max_stops_new)
+
+        solutions.extend((sol1, sol2, sol3))
+
+        sys.stderr.write(f"Clarke-Wright: {sol2[0]}\n")
+        sys.stderr.write(f"Sweep: {sol1[0]}\n")
+        sys.stderr.write(f"PyVRP: {sol3[0]}\n")
+    
+    min_cost, optimal_path, author, new_max_stops = min(solutions, key=lambda s: s[0])
     min_cost = round(min_cost, 2)
-    content = str(min_cost) + '\n' + '\n'.join(' '.join(map(str, p)) for p in optimal_path)
 
     if not print_readable:
+        content = str(min_cost) + '\n' + '\n'.join(' '.join(map(str, p)) for p in optimal_path)
         sys.stdout.write(content)
     else:
         print("Cost:", min_cost)
+        sys.stderr.write(f"Optimal algorithm: {author}\n")
+        sys.stderr.write(f"Maximum stops: {new_max_stops}\n")
         for routeIndex, route in enumerate(optimal_path):
             for j, loc in enumerate(route):
                 name = name_lines[loc]

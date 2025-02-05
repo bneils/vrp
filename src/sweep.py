@@ -72,6 +72,11 @@ def sweep(coords, distances, max_miles, max_stops):
         paths = []
         cluster = []
         for i in new_polar_coords:
+            # Sweep won't come up with an answer if some locations can't be made into a route
+            if not validator([i]):
+                paths.append([i])
+                total_cost += distances.distance_path([i])
+                continue
             cluster.append(i)
             path, cost = tsp(cluster, validator, distances)
             if len(cluster) > k or cost > M:

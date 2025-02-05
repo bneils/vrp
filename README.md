@@ -4,6 +4,8 @@ This repo contains setup instructions and some code to get a Vehicle Routing (VR
 
 Currently, this repository only supports modifying the maximum trip distance and maximum trip length. The motivation for this is personal since I only wrote this to optimize visiting multiple trails in one day for the smallest distance which I thought would put the least wear on my car.
 
+For some reason, the Sweep algorithm tends to give the best results. However, sometimes it does worse for larger `max stops` values, so the program will consider maximum stops from the provided value to 1. In the event where the maximum trip distance is too low and makes Sweep and PyVRP ineffective (since they won't consider invalid routes), Clarke-Wright was considered "optimal" which has now been changed by removing those points before analysis and re-adding them later.
+
 Setup involves downloading and processing OSRM data which may require a lot of RAM for maps larger than a US state. Follow the instructions [here](https://github.com/Project-OSRM/osrm-backend) to self-host the OSRM backend. If you do not want to do that, you can replace `HOST_IP` with the official OSRM API. It is preferred to download the map locally since the OSRM API is slow and you may want to add or remove points, but if you are just testing the program the API is fine.
 
 # Usage

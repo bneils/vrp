@@ -1,1 +1,2 @@
-pyvrp==0.10.1
+pyvrp==0.*
+geographiclib==2.*
